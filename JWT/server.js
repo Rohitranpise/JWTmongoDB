@@ -1,14 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3005;
 const app = express();
 const db = require("./app/models");
 const Role = db.role;
 const dbConfig = require("./app/config/db.config")
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://localhost:3005"
 };
 
 app.use(cors(corsOptions));
@@ -23,6 +23,8 @@ app.get("/", (req, res) => {
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+require('./app/routes/post.routes')(app);
+require('./app/routes/like.route')(app);
 
 db.mongoose
     .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
